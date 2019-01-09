@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 import {
   AppRegistry,
@@ -17,10 +17,10 @@ import {
   PixelRatio,
   TouchableHighlight,
   Button
-} from "react-native";
+} from 'react-native';
 
-import { ViroVRSceneNavigator, ViroARSceneNavigator } from "react-viro";
-const apikey = require("./config");
+import { ViroVRSceneNavigator, ViroARSceneNavigator } from 'react-viro';
+const apikey = require('./config');
 /*
  TODO: Insert your API key below
  */
@@ -29,12 +29,12 @@ var sharedProps = {
 };
 
 // Sets the default scene you want for AR and VR
-var InitialARScene = require("./js/HelloWorldSceneAR");
-var InitialVRScene = require("./js/HelloWorldScene");
+var InitialARScene = require('./js/HelloWorldSceneAR');
+var InitialVRScene = require('./js/HelloWorldScene');
 
-var UNSET = "UNSET";
-var VR_NAVIGATOR_TYPE = "VR";
-var AR_NAVIGATOR_TYPE = "AR";
+var UNSET = 'UNSET';
+var VR_NAVIGATOR_TYPE = 'VR';
+var AR_NAVIGATOR_TYPE = 'AR';
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
@@ -69,41 +69,7 @@ export default class ViroSample extends Component {
     } else if (this.state.navigatorType == VR_NAVIGATOR_TYPE) {
       return this._getVRNavigator();
     } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
-      return (
-        <View style={localStyles.outer}>
-          <ViroARSceneNavigator
-            {...this.state.sharedProps}
-            initialScene={{
-              scene: InitialARScene,
-              passProps: {
-                displayObject: false
-              }
-            }}
-            style={localStyles.arView}
-            viroAppProps={this.state.viroAppProps}
-          />
-          <View
-            style={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-              alignItems: "center",
-              height: 50
-            }}
-          >
-            <TouchableHighlight
-              style={localStyles.buttons}
-              onPress={this._toggleRenderFlower}
-              underlayColor={"#00000000"}
-            >
-              <Text text="hello" style={{ color: "white" }} />
-            </TouchableHighlight>
-          </View>
-          <Button title="our but" onPress={this._toggleRenderFlower} />
-        </View>
-      );
+      return this._getARNavigator();
     }
   }
 
@@ -119,7 +85,7 @@ export default class ViroSample extends Component {
           <TouchableHighlight
             style={localStyles.buttons}
             onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
-            underlayColor={"#68a0ff"}
+            underlayColor={'#68a0ff'}
           >
             <Text style={localStyles.buttonText}>AR</Text>
           </TouchableHighlight>
@@ -127,7 +93,7 @@ export default class ViroSample extends Component {
           <TouchableHighlight
             style={localStyles.buttons}
             onPress={this._getExperienceButtonOnPress(VR_NAVIGATOR_TYPE)}
-            underlayColor={"#68a0ff"}
+            underlayColor={'#68a0ff'}
           >
             <Text style={localStyles.buttonText}>VR</Text>
           </TouchableHighlight>
@@ -145,33 +111,32 @@ export default class ViroSample extends Component {
           initialScene={{
             scene: InitialARScene,
             passProps: {
-              displayObject: false,
-              renderFlower: this.state.renderFlower
+              displayObject: false
             }
           }}
           style={localStyles.arView}
-          // renderFlower={this.state.renderFlower}
+          viroAppProps={this.state.viroAppProps}
         />
         <View
           style={{
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             right: 0,
             top: 0,
             bottom: 0,
-            alignItems: "center",
+            alignItems: 'center',
             height: 50
           }}
         >
           <TouchableHighlight
             style={localStyles.buttons}
             onPress={this._toggleRenderFlower}
-            underlayColor={"#00000000"}
+            underlayColor={'#00000000'}
           >
-            <Text text="hello" style={{ color: "white" }} />
+            <Text text="hello" style={{ color: 'white' }} />
           </TouchableHighlight>
         </View>
-        <Button title="our but" onPress={this._toggleRenderFlower} />
+        {/* <Button title="our but" onPress={this._toggleRenderFlower} /> */}
       </View>
     );
   }
@@ -206,12 +171,9 @@ export default class ViroSample extends Component {
     });
   }
 
-  _showText = () => {
-    console.log("clicked");
-  };
+  _showText = () => {};
 
   _toggleRenderFlower = () => {
-    console.log(this.state.viroAppProps.renderFlower, "<<<<<");
     this.setState(prevState => ({
       viroAppProps: { renderFlower: !prevState.viroAppProps.renderFlower }
     }));
@@ -221,27 +183,27 @@ export default class ViroSample extends Component {
 var localStyles = StyleSheet.create({
   viroContainer: {
     flex: 1,
-    backgroundColor: "black"
+    backgroundColor: 'black'
   },
   outer: {
     flex: 1
   },
   inner: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "transparent"
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'transparent'
   },
   titleText: {
     paddingTop: 30,
     paddingBottom: 20,
-    color: "#fff",
-    textAlign: "center",
+    color: '#fff',
+    textAlign: 'center',
     fontSize: 25
   },
   buttonText: {
-    color: "#fff",
-    textAlign: "center",
+    color: '#fff',
+    textAlign: 'center',
     fontSize: 20
   },
   buttons: {
@@ -251,10 +213,10 @@ var localStyles = StyleSheet.create({
     paddingBottom: 20,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: "blue",
+    backgroundColor: 'blue',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#ffffff00"
+    borderColor: '#ffffff00'
   },
   exitButton: {
     height: 50,
@@ -263,10 +225,10 @@ var localStyles = StyleSheet.create({
     paddingBottom: 10,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: "#68a0cf",
+    backgroundColor: '#68a0cf',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#fff"
+    borderColor: '#fff'
   },
   arView: {
     flex: 1

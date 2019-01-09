@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
 import {
   ViroARScene,
@@ -13,11 +13,11 @@ import {
   Viro3DObject,
   ViroFlexView,
   Button
-} from "react-viro";
+} from 'react-viro';
 
-const lavObj = require("./res/lavender/lavender_plant.obj");
-const lavMtl = require("./res/lavender/lavender_plant.mtl");
-const lavPng = require("./res/lavender/lavender_plant.png");
+const lavObj = require('./res/lavender/lavender_plant.obj');
+const lavMtl = require('./res/lavender/lavender_plant.mtl');
+const lavPng = require('./res/lavender/lavender_plant.png');
 
 export default class HelloWorldSceneAR extends Component {
   constructor() {
@@ -25,15 +25,16 @@ export default class HelloWorldSceneAR extends Component {
 
     // Set initial state here
     this.state = {
-      text: "Initializing AR...",
+      text: 'Initializing AR...',
       flower: {
         source: lavObj,
         resources: [lavMtl, lavPng],
         position: [0, 0, 0],
         scale: [0.0007, 0.0007, 0.0007],
-        type: "OBJ"
-      }
-      // obs = [],
+        type: 'OBJ'
+      },
+      obs: [1],
+      clicked: true
     };
 
     // bind 'this' to functions
@@ -55,8 +56,8 @@ export default class HelloWorldSceneAR extends Component {
           outerAngle={20}
           castShadow={true}
         />
-        {console.log(this.props)}
-        {this.props.sceneNavigator.viroAppProps.renderFlower && (
+
+        {/* {this.props.sceneNavigator.viroAppProps.renderFlower && (
           <ViroNode
             position={[0, -1, 0]}
             dragType="FixedToWorld"
@@ -70,7 +71,7 @@ export default class HelloWorldSceneAR extends Component {
               type={type}
             />
           </ViroNode>
-        )}
+        )} */}
         {/* <ViroNode
           position={[0, -1, 0]}
           dragType="FixedToWorld"
@@ -84,23 +85,52 @@ export default class HelloWorldSceneAR extends Component {
             type={type}
           />
         </ViroNode> */}
-        {/* {this.state.obs && (this.state.obs.map((object,index) => {
-
-        }))} */}
+        {this.state.obs.map((object, index) => {
+          return (
+            <ViroNode
+              position={[0, -1, 0]}
+              dragType="FixedToWorld"
+              onDrag={() => {}}
+            >
+              <Viro3DObject
+                source={source}
+                resources={resources}
+                position={position}
+                scale={scale}
+                type={type}
+              />
+            </ViroNode>
+          );
+        })}
       </ViroARScene>
     );
   }
 
-  // componentDidUpdate = (prevState, prevProps) => {
-  //   if (this.props.renderFlower !== prevProps.props.renderFlower) {
-  //     this.state;
-  //   }
-  // };
+  componentDidUpdate = (prevProps, prevState) => {
+    // console.log('update');
+    // console.log(this.state, 'state checker');
+    // console.log(prevState, 'state checker');
+    // console.log(this.props.sceneNavigator.viroAppProps.renderFlower);
+    // console.log(prevProps.sceneNavigator.viroAppProps.renderFlower);
+    if (
+      this.props.sceneNavigator.viroAppProps.renderFlower !== this.state.clicked
+    ) {
+      this.setState(
+        prevState => ({
+          obs: [...prevState.obs, 1],
+          clicked: !prevState.clicked
+        }),
+        () => {
+          console.log('heloo threre');
+        }
+      );
+    }
+  };
 
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
-        text: "Hello World!"
+        text: 'Hello World!'
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
       // Handle loss of tracking
@@ -116,11 +146,11 @@ export default class HelloWorldSceneAR extends Component {
 
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
-    fontFamily: "Arial",
+    fontFamily: 'Arial',
     fontSize: 30,
-    color: "#ffffff",
-    textAlignVertical: "center",
-    textAlign: "center"
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center'
   }
 });
 
